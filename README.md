@@ -1,5 +1,7 @@
 # PokemonFun
 
+This is for my own practice using Angular and manipulating data using the Pokémon API.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
 
 ## Development server
