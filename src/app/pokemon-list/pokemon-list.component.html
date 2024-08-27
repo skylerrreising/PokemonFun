@@ -1,0 +1,9 @@
+<ul>
+    @for (pokemon of pokemonList; track pokemon){
+    <li>
+        <a [href]="pokemon.url">
+        {{ pokemon.name }}
+        </a>
+    </li>
+    }
+</ul>
