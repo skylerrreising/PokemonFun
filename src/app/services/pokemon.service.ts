@@ -23,13 +23,23 @@ export class PokemonService {
     return this.http.get<PokemonDetailsResponse>(`${url}`);
   }
 
+  // getPokemonAbilities(url: string): Observable<PokemonAbilitiesResponse> {
+  //   return this.http.get<PokemonAbilitiesResponse>(`${url}`).pipe(
+  //     filter((response) => response.language.name === 'en')
+  //   )};
+
   getPokemonAbilities(url: string): Observable<PokemonAbilitiesResponse> {
     return this.http.get<PokemonAbilitiesResponse>(`${url}`).pipe(
-      filter((response) => 
-        response.effect_entries === 
-        response.effect_entries.filter(x => x.language.name === 'en')),
-      );
-    }
+      map((response) => {
+        // Ensure response has the expected structure
+        if (response && response.language && response.language.name) {
+          return response;
+        }
+        return null;
+      }),
+      filter((response): response is PokemonAbilitiesResponse => response !== null && response.language.name === 'en')
+    );
+  }
 }
 
 interface PokemonListResponse {
@@ -45,6 +55,10 @@ interface PokemonDetailsResponse {
 }
 
 interface PokemonAbilitiesResponse {
+  language: {
+    name: string;
+    url: string;
+  };
   effect_entries: EffectEntries[];
 }
 
