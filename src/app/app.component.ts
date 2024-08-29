@@ -7,7 +7,7 @@ import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
   standalone: true,
   imports: [
     RouterOutlet, 
-    PokemonListComponent
+    PokemonListComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

@@ -1,9 +1,12 @@
-<ul>
-    @for (pokemon of pokemonList; track pokemon){
-    <li>
-        <a [href]="pokemon.url">
-        {{ pokemon.name }}
-        </a>
-    </li>
-    }
-</ul>
+@for (pokemon of pokemonList; track pokemon){
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            <a [href]="pokemon.url">
+                <h4>{{ pokemon.name }}</h4>
+            </a>
+        </mat-card-title>
+    </mat-card-header>
+    <img [src]="pokemon.picUrl">
+</mat-card>
+}
