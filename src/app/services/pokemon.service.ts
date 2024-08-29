@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,12 @@ export class PokemonService {
   }
 
   getPokemonAbilities(url: string): Observable<PokemonAbilitiesResponse> {
-    return this.http.get<PokemonAbilitiesResponse>(`${url}`);
-  }
+    return this.http.get<PokemonAbilitiesResponse>(`${url}`).pipe(
+      filter((response) => 
+        response.effect_entries === 
+        response.effect_entries.filter(x => x.language.name === 'en')),
+      );
+    }
 }
 
 interface PokemonListResponse {
@@ -46,6 +50,10 @@ interface PokemonAbilitiesResponse {
 
 interface EffectEntries {
   effect: string;
+  language: {
+    name: string;
+    url: string;
+  };
 }
 
 export interface PokemonListItem {
