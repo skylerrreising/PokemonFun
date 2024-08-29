@@ -11,7 +11,7 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemonList(limit?: string): Observable<PokemonListResponse> {
+  getPokemonList(limit?: number): Observable<PokemonListResponse> {
     if (limit) {
       return this.http.get<PokemonListResponse>(`${this.baseUrl}${this.pokemon}?limit=${limit}`);
     }else{
@@ -21,6 +21,10 @@ export class PokemonService {
 
   getPokemonDetails(url: string): Observable<PokemonDetailsResponse> {
     return this.http.get<PokemonDetailsResponse>(`${url}`);
+  }
+
+  getPokemonAbilities(url: string): Observable<PokemonAbilitiesResponse> {
+    return this.http.get<PokemonAbilitiesResponse>(`${url}`);
   }
 }
 
@@ -36,8 +40,19 @@ interface PokemonDetailsResponse {
   };
 }
 
+interface PokemonAbilitiesResponse {
+  effect_entries: EffectEntries[];
+}
+
+interface EffectEntries {
+  effect: string;
+}
+
 export interface PokemonListItem {
+  id: number;
   name: string;
   url: string;
   picUrl: string;
+  description: string;
 }
+
