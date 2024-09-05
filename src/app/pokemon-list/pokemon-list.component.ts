@@ -18,22 +18,26 @@ export class PokemonListComponent implements OnInit {
 
   ngOnInit(): void {
     this.pokemonService.getPokemonList(10).subscribe((response) => {
-      response.results = response.results.map((pokemon) => {
+      this.pokemonList = response.results;
+
+      this.pokemonList.map((pokemon) => {
+        pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
+
         this.pokemonService.getPokemonDetails(pokemon.url).subscribe((response) => {
+          console.log(response);
           return pokemon.picUrl = response.sprites.front_default;
         });
 
         this.pokemonId = pokemon.url.split('/').filter(Boolean).pop();
 
         this.pokemonService.getPokemonAbilities(`${this.abilitiesUrl}${this.pokemonId}`).subscribe((response) => {
-          return pokemon.description = response.effect_entries[0].effect;
+          pokemon.description = response.effect_entries[1].effect;
+          return pokemon.description;
         });
 
-        pokemon.name = pokemon.name[0].toUpperCase() + pokemon.name.slice(1);
         return pokemon;
       });
 
-      return this.pokemonList = response.results;
     });
   }
 }
