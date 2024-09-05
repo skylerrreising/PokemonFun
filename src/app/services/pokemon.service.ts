@@ -34,9 +34,17 @@ interface PokemonListResponse {
 
 interface PokemonDetailsResponse {
   id: number;
+  abilities: Abilities[];
   name: string;
   sprites: {
     front_default: string;
+  };
+}
+
+interface Abilities {
+  ability: {
+    name: string;
+    url: string;
   };
 }
 
